@@ -29,7 +29,7 @@ touch .gitignore
 
 git add .
 git commit -m "ultimate"
-git remote add origin https://github.com/game102/UE4Articles.git
+git remote add origin https://github.com/game102/snake.git
 git push -u origin master
 
 
