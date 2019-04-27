@@ -41,8 +41,14 @@ public:
 	UPROPERTY(EditAnywhere)
 	FVector2D DirectionMoveSnake;
 
-	float StepDely = 0.5f;
-	float BufferTime = 0;
+	float StepDelyMove = 0.5f;
+	float BufferTimeMove = 0;
 
 	void MoveSnake();
+
+	int32 Score = 0;
+
+	class APawnCamera* WhoPawn;
+
+	void HaveDamage();
 };

@@ -37,6 +37,7 @@ public:
 
 	class ASnakeActor* SnakeInstance;
 
+	UFUNCTION(BlueprintCallable, Category = "SnakePawn")
 	void AddSnakeToMap();
 
 	UPROPERTY(VisibleAnywhere)
@@ -55,4 +56,22 @@ public:
 	float SpawnZ = 50.f;
 
 	void AddRandomApple();
+
+	float StepDelayApple = 1.f;
+	float BuffterTimeApple = 0;
+
+	int32 GameMode = 0;  //Show MainMenu Canvas
+
+	UFUNCTION(BlueprintCallable, Category = "SnakePawn")
+	int32 GetSnakeGameMode() const { return GameMode; }
+
+	UFUNCTION(BlueprintCallable, Category = "SnakePawn")
+	int32 GetScore();
+
+	bool GamePause = false;
+
+	UFUNCTION(BlueprintCallable, Category = "SnakePawn")
+	bool GetGamePause() const { return GamePause; }
+
+	void SnakeDestory();
 };

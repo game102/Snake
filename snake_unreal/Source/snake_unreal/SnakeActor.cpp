@@ -1,10 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SnakeActor.h"
+#include "PawnCamera.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Materials/MaterialInstance.h"
 #include "Runtime/CoreUObject/Public/UObject/ConstructorHelpers.h"
+
 
 // Sets default values
 ASnakeActor::ASnakeActor()
@@ -34,12 +36,12 @@ void ASnakeActor::Tick(float DeltaTime)
 
 	SetVisibleChain();
 
-	BufferTime += DeltaTime;
+	BufferTimeMove += DeltaTime;
 	
-	if (BufferTime > StepDely)
+	if (BufferTimeMove > StepDelyMove)
 	{
 		MoveSnake();
-		BufferTime = 0;
+		BufferTimeMove = 0;
 	}
 }
 
@@ -130,5 +132,10 @@ void ASnakeActor::MoveSnake()
 
 		SnakeBody[0]->SetRelativeLocation(StartPoint);
 	}
+}
+
+void ASnakeActor::HaveDamage()
+{
+	WhoPawn->SnakeDestory();
 }
 

@@ -21,6 +21,8 @@ APawnCamera::APawnCamera()
 
 	MyCamera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	MyCamera->AttachTo(MyCameraSpring, USpringArmComponent::SocketName);
+	MyCamera->ProjectionMode =ECameraProjectionMode::Orthographic;
+	MyCamera->OrthoWidth = 5000.f;
 
 	MyCameraSpring->SetRelativeRotation( FRotator(-90.f, 0.f, 0.f) );
 	MyCameraSpring->TargetArmLength = 1700.f;
@@ -33,8 +35,6 @@ APawnCamera::APawnCamera()
 void APawnCamera::BeginPlay()
 {
 	Super::BeginPlay();
-
-	AddSnakeToMap();
 }
 
 // Called every frame
@@ -42,7 +42,20 @@ void APawnCamera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AddRandomApple();
+	BuffterTimeApple += DeltaTime;
+
+	if (GameMode > 0)
+	{
+		if (BuffterTimeApple > StepDelayApple)
+		{
+			if (!GamePause)
+			{
+				AddRandomApple();
+			}
+			BuffterTimeApple = 0.f;
+		}
+	}
+
 }
 
 // Called to bind functionality to input
@@ -60,6 +73,8 @@ void APawnCamera::AddSnakeToMap()
 	if (GetWorld())
 	{
 		SnakeInstance = GetWorld()->SpawnActor<ASnakeActor>(StartPointLocation, StartPointRotation);
+		GameMode = 1;  //Hide MainMenu Canvas
+		SnakeInstance->WhoPawn = this;
 	}
 }
 
@@ -67,46 +82,60 @@ void APawnCamera::ForwardMove(float ButtonVal)
 {
 	Key = ButtonVal;
 
-	switch (Key)
+	if (GameMode > 0)
 	{
-	case 1:
-		if (WSDA.X != 1)
+
+		if (Key == 5)
 		{
-			WSDA = FVector2D(0, 0);
-			WSDA.X = -1;
+			GamePause = !GamePause;
 		}
-		break;
 
-	case 2:
-		if (WSDA.X != -1)
+		if (!GamePause) {
+
+			switch (Key)
+			{
+			case 1:
+				if (WSDA.X != 1)
+				{
+					WSDA = FVector2D(0, 0);
+					WSDA.X = -1;
+				}
+				break;
+
+			case 2:
+				if (WSDA.X != -1)
+				{
+					WSDA = FVector2D(0, 0);
+					WSDA.X = 1;
+				}
+				break;
+
+			case 3:
+				if (WSDA.Y != 1)
+				{
+					WSDA = FVector2D(0, 0);
+					WSDA.Y = -1;
+				}
+				break;
+
+			case 4:
+				if (WSDA.Y != -1)
+				{
+					WSDA = FVector2D(0, 0);
+					WSDA.Y = 1;
+				}
+				break;
+			}
+
+			if (SnakeInstance)
+			{
+				SnakeInstance->DirectionMoveSnake = WSDA;
+			}
+		}
+		else
 		{
-			WSDA = FVector2D(0, 0);
-			WSDA.X = 1;
+			SnakeInstance->DirectionMoveSnake = FVector2D(0, 0);
 		}
-		break;
-
-	case 3:
-		if (WSDA.Y != 1)
-		{
-			WSDA = FVector2D(0, 0);
-			WSDA.Y = -1;
-		}
-		break;
-
-	case 4:
-		if (WSDA.Y != -1)
-		{
-			WSDA = FVector2D(0, 0);
-			WSDA.Y = 1;
-		}
-		break;
-	}
-
-	if (SnakeInstance)
-	{
-		SnakeInstance->DirectionMoveSnake = WSDA;
-
-		UE_LOG(LogTemp, Warning, TEXT("Your %d and %d") ,WSDA.X, WSDA.Y);
 	}
 }
 
@@ -117,9 +146,7 @@ void APawnCamera::AddRandomApple()
 	float SpawnX = FMath::FRandRange(MinX, MaxX);
 	float SpawnY = FMath::FRandRange(MinY, MaxY);
 
-	FVector StartPoint = FVector(0, 0, 0);
-
-	UE_LOG(LogTemp, Warning, TEXT("1111111111!"));
+	FVector StartPoint = FVector(SpawnX, SpawnY, SpawnZ);
 
 	if (SnakeInstance)
 	{
@@ -128,5 +155,23 @@ void APawnCamera::AddRandomApple()
 			GetWorld()->SpawnActor<AAppleActor>(StartPoint, StartPointRotation);
 		}
 	}
+}
+
+int32 APawnCamera::GetScore()
+{
+	if (SnakeInstance)
+	{
+		return SnakeInstance->Score;
+	}
+
+	return 0;
+}
+
+void APawnCamera::SnakeDestory()
+{
+	GameMode = 0;
+
+	if (SnakeInstance)
+		SnakeInstance->Destroy(true, true);
 }
 

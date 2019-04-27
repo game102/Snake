@@ -1,11 +1,20 @@
 /*
 
-!/snake_unreal/
 !.gitignore
 !.gitattributes
+
+!/snake_unreal/
 /snake_unreal/*
+
 !/snake_unreal/Config
 !/snake_unreal/Content
 !/snake_unreal/Source
 !/snake_unreal/Readme.txt
 !/snake_unreal/snake_unreal.uproject
+
+
+!/snake_unity/
+
+
+
+!/snake_creator/

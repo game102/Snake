@@ -28,4 +28,10 @@ public:
 	class UStaticMesh* SnakeEatMesh;
 	
 	void CollectEat();
+
+	UPROPERTY(EditAnywhere)
+	TArray<AActor*> CollectedEats;
+
+	float StepDelayEat = 2.0f;
+	float BufferTimeEat = 0.f;
 };

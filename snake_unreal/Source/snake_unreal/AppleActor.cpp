@@ -43,21 +43,31 @@ void AAppleActor::BeginPlay()
 void AAppleActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	 BufferTimeEat += DeltaTime;
+
+	 if (BufferTimeEat > StepDelayEat)
+	 {
+		 Destroy(true, true);
+	 }
+
 	CollectEat();
 }
 
 void AAppleActor::CollectEat()
 {
-	TArray<AActor*> CollectedActors;
-	GetOverlappingActors(CollectedActors);
 
-	for (int32 i = 0; i < CollectedActors.Num(); ++i)
+	GetOverlappingActors(CollectedEats);
+
+	for (int32 i = 0; i < CollectedEats.Num(); ++i)
 	{
-		ASnakeActor* const Test = Cast<ASnakeActor>(CollectedActors[i]);
+		ASnakeActor* const Test = Cast<ASnakeActor>(CollectedEats[i]);
 
 		if (Test)
 		{
 			Test->VisibleChainNum++;
+			Test->Score++;
+
 			Destroy(true, true);
 			break;
 		}
