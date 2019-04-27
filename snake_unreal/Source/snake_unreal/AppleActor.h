@@ -23,6 +23,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	class USphereComponent* MyRootComponent;
+
+	class UStaticMesh* SnakeEatMesh;
 	
-	
+	void CollectEat();
 };

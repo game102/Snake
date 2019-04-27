@@ -23,6 +23,26 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	int32 SnakeSize = 15;
+
+	float StepSnake = 45.f;
+
+	TArray<UStaticMeshComponent*> SnakeBody;
+
+	class USphereComponent* MyRootComponent;
+
+	void CreateSnakeBody();
 	
-	
+	UPROPERTY(EditAnywhere)
+	int32 VisibleChainNum = 3;
+
+	void SetVisibleChain();
+
+	UPROPERTY(EditAnywhere)
+	FVector2D DirectionMoveSnake;
+
+	float StepDely = 0.5f;
+	float BufferTime = 0;
+
+	void MoveSnake();
 };

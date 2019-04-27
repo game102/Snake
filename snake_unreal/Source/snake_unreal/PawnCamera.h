@@ -26,6 +26,33 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
-	
+	UPROPERTY(EditAnywhere)
+	class USceneComponent* MyRootComponent;
+
+	UPROPERTY(EditAnywhere)
+	class USpringArmComponent* MyCameraSpring;
+
+	UPROPERTY(EditAnywhere)
+	class UCameraComponent* MyCamera;
+
+	class ASnakeActor* SnakeInstance;
+
+	void AddSnakeToMap();
+
+	UPROPERTY(VisibleAnywhere)
+	int32 Key;
+
+	FVector2D WSDA;
+
+	void ForwardMove(float ButtonVal);
+
+	float MinY = -1500.f;
+	float MinX = -800.f;
+
+	float MaxY = 1500.f;
+	float MaxX = 800.f;
+
+	float SpawnZ = 50.f;
+
+	void AddRandomApple();
 };
