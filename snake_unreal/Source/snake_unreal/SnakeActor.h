@@ -25,7 +25,7 @@ public:
 
 	int32 SnakeSize = 15;
 
-	float StepSnake = 45.f;
+	float StepSnake = 100.f;
 
 	TArray<UStaticMeshComponent*> SnakeBody;
 
@@ -41,7 +41,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	FVector2D DirectionMoveSnake;
 
-	float StepDelyMove = 0.5f;
+	float StepDelyMove = 0.2f;
 	float BufferTimeMove = 0;
 
 	void MoveSnake();

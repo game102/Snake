@@ -62,7 +62,9 @@ void APawnCamera::Tick(float DeltaTime)
 void APawnCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
 	PlayerInputComponent->BindAxis("KeyMapMove", this, &APawnCamera::ForwardMove);
+
 }
 
 void APawnCamera::AddSnakeToMap()
@@ -139,6 +141,7 @@ void APawnCamera::ForwardMove(float ButtonVal)
 	}
 }
 
+
 void APawnCamera::AddRandomApple()
 {
 	FRotator StartPointRotation = FRotator(0, 0, 0);
@@ -163,7 +166,6 @@ int32 APawnCamera::GetScore()
 	{
 		return SnakeInstance->Score;
 	}
-
 	return 0;
 }
 

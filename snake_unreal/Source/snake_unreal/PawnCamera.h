@@ -40,7 +40,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SnakePawn")
 	void AddSnakeToMap();
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	int32 Key;
 
 	FVector2D WSDA;

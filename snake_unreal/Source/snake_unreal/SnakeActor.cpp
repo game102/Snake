@@ -48,7 +48,7 @@ void ASnakeActor::Tick(float DeltaTime)
 void ASnakeActor::CreateSnakeBody()
 {
 	class UStaticMesh* SnakeChainMesh;
-	SnakeChainMesh = ConstructorHelpers::FObjectFinder<UStaticMesh>( TEXT("/Engine/BasicShapes/Sphere") ).Object;
+	SnakeChainMesh = ConstructorHelpers::FObjectFinder<UStaticMesh>( TEXT("/Engine/BasicShapes/Cube") ).Object;
 
 	class UMaterialInstance* SnakeBodyColor;
 	SnakeBodyColor = ConstructorHelpers::FObjectFinderOptional<UMaterialInstance>( TEXT("MaterialInstanceConstant'/Game/Material/PurColor_Snake.PurColor_Snake'") ).Get();
